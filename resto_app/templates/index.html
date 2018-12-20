@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block content %} 
+    <h1>Hello World!</h1>
+    <img src="{{ url_for('static', filename='img/komi.gif') }}">
+    <!-- test if profile picture could be added -->
+    {% if g.user %}
+        <img src="{{ g.user['image_url'] }}">
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Hello!{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block content %} 
+    <h1>Foods</h1>
+    {% for food in foods %}
+        <p>{{ food.name }}</p>
+        <p>{{ food.description }}</p>
+        <p>{{ food.unit_price }}</p>
+        <img src="{{ food.image_url }}">
+        <hr>
+    {% endfor %}
+    <h1>Drinks</h1>
+{% endblock %}
