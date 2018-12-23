@@ -10,8 +10,6 @@ bp = Blueprint('menu', __name__, url_prefix='/menu')
 
 @bp.route('/')
 def index():
-    # TODO: bikin data makanan dan minuman di sqlite
-    # TODO: load semua menu makanan dan minuman
     db = get_db()
     foods = db.execute(
                 'SELECT * FROM menu WHERE type = ?', ('food',)
@@ -21,3 +19,12 @@ def index():
                 'SELECT * FROM menu WHERE type = ?', ('drink',)
             ).fetchall()
     return render_template('menu/index.html', foods=foods, drinks=drinks)
+
+@bp.route('/<int:id>')
+def detail(id):
+    db = get_db()
+    item = db.execute(
+        'SELECT * FROM menu WHERE menu_id = ?', (id,)
+    ).fetchone()
+    return render_template('menu/detail.html', item=item)
+

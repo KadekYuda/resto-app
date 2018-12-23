@@ -3,54 +3,77 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
+        {% block stylesheets %}{% endblock %}
+        <style>
+            .carousel .carousel-item{
+    height: 400px;
+}
+
+.carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 400px;
+}
+        </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Resto App</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% block home_active %}{% endblock %}" href="{{ url_for('index') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% block menu_active %}{% endblock %}" href="{{ url_for('menu.index') }}">Menu</a>    
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% block order_active %}{% endblock %}" href="#">Order</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    {% if g.user %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ g.user["name"] }}</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
-                            {% if g.user['role'] == 'admin' %}
-                                <a class="dropdown-item" href="#">Admin</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-        <div class="container">
-            {% block content %} 
+        <div class="d-flex flex-column wrapper">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Resto App</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% block home_active %}{% endblock %}" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block menu_active %}{% endblock %}" href="{{ url_for('menu.index') }}">Menu</a>    
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block order_active %}{% endblock %}" href="#">Order</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if g.user %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ g.user["name"] }}</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
+                                {% if g.user['role'] == 'admin' %}
+                                    <a class="dropdown-item" href="#">Admin</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            {% block jumbotrons %}{% endblock %}
+            <div class="container flex-fill">
+                {% block content %} 
 
-            {% endblock %}
+                {% endblock %}
+            </div>
+            <footer class="footer mt-auto py-3 bg-dark">
+                <div class="container">
+                    <span class="text-muted">2018 Food App</span>
+                </div>
+            </footer>
         </div>
         <script src="{{ url_for('static', filename='js/jquery-3.3.1.js')}}"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+        {% block scripts %}{% endblock %}
     </body>
 </html>

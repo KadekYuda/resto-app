@@ -9,7 +9,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'resto_app.sqlite'),
-        PERMANENT_SESSION_LIFETIME=timedelta(minutes=30)
+        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15)
     )
 
     if test_config is None:
