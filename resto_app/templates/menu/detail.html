@@ -12,7 +12,11 @@
                 <h1>{{ item.name }}</h1>
                 <h5 class="price">{{ item.unit_price }}</h5>
                 <p class="flex-fill">{{ item.description }}</p>
-                <a href="#" class="btn btn-primary mb-1" role="button">Order</a>
+                {% if g.user %}
+                    <a href="#" class="btn btn-primary mb-1" role="button">Order</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-danger mb-1" role="button">Login to order!</a>
+                {% endif %}
                 <a href="{{ url_for('menu.index') }}" class="btn btn-info" role="button">Back to Menu</a>
             </div>
         </div>

@@ -2,45 +2,41 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/all.css') }}" >
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}" >
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" >
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {% block stylesheets %}{% endblock %}
-        <style>
-            .carousel .carousel-item{
-    height: 400px;
-}
-
-.carousel-item img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 400px;
-}
-        </style>
     </head>
     <body>
         <div class="d-flex flex-column wrapper">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">Resto App</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}">RestoApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link {% block home_active %}{% endblock %}" href="{{ url_for('index') }}">Home</a>
+                            <a class="nav-link mr-2 {% block home_active %}{% endblock %}" href="{{ url_for('index') }}"><i class="fas fa-home mr-1"></i>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% block menu_active %}{% endblock %}" href="{{ url_for('menu.index') }}">Menu</a>    
+                            <a class="nav-link {% block menu_active %}{% endblock %}" href="{{ url_for('menu.index') }}"><i class="fas fa-utensils mr-1"></i>Menu</a>    
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% block order_active %}{% endblock %}" href="#">Order</a>
+                            <a class="nav-link" href="#"><i class="fas fa-users mr-1"></i>About</a>    
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         {% if g.user %}
+                        <li class="nav-item mr-2">
+                            <a class="nav-link" href="#"><i class="fas fa-shopping-cart mr-1"></i>Cart</a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ g.user["name"] }}</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle"></i>
+                                {{ g.user["name"] }}
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">Profile</a>
                                 <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
@@ -61,17 +57,17 @@
                 </div>
             </nav>
             {% block jumbotrons %}{% endblock %}
-            <div class="container flex-fill">
+            <div class="container-fluid flex-fill">
                 {% block content %} 
 
                 {% endblock %}
             </div>
-            <footer class="footer mt-auto py-3 bg-dark">
+        </div>
+        <footer class="footer py-3 bg-dark">
                 <div class="container">
-                    <span class="text-muted">2018 Food App</span>
+                    <span class="text-muted"><i class="far fa-copyright"></i>2018 Food App</span>
                 </div>
             </footer>
-        </div>
         <script src="{{ url_for('static', filename='js/jquery-3.3.1.js')}}"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
         {% block scripts %}{% endblock %}

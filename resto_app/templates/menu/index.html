@@ -5,7 +5,7 @@
 {% block menu_active %}active{% endblock %}
 
 {% block content %}
-    <div class="mt-5 mb-5">
+    <div class="m-5">
         <h1>Foods</h1>
         <div class="row mb-5">
             {% for food in foods %}
@@ -28,9 +28,9 @@
                 <div class="card h-100 p-0">
                     <img class="card-img-top" src="{{ drink.image_url }}">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title flex-fill">{{ drink.name }}</h5>
-                        <p class="card-text">{{ drink.unit_price }}</p>
-                        <a href="#" class="btn btn-info btn-block" role="button">Details</a>
+                        <h5 class="card-title flex-fill text-justify">{{ drink.name }}</h5>
+                        <p class="card-text price pb-3">{{ drink.unit_price }}</p>
+                        <a href="{{ url_for('menu.detail', id=drink['menu_id']) }}" class="btn btn-info btn-block" role="button">Details</a>
                     </div>
                 </div>
             </div>
