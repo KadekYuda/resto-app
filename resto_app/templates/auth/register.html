@@ -7,45 +7,60 @@
     </head>
     <body>
         {% for message in get_flashed_messages() %}
-            <div class="alert alert-danger">{{ message }}</div>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% endfor %}
         <div class="container">
             <div class="row align-items-center p-5">
-                <div class="col-md-6 offset-3 rounded border border-primary p-5">
+                <div class="col-md-6 offset-3 rounded border border-dark p-5">
+                    <h1 class="text-center bg-dark text-light">RESTOAPP</h1>
                     <h1 class="text-center">Register</h1>
                     <hr>
-                    <form method="POST">
+                    <form method="POST" name="register" class="needs-validation" onsubmit="return validateForm()" novalidate>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input class="form-control" id="name" name="name">
+                            <input class="form-control" id="name" name="name" oninput="validateName()" required>
+                            <div class="invalid-feedback-message" id="invalidName"></div>
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input class="form-control" id="username" name="username">
+                            <input class="form-control" id="username" name="username" onchange="validateUsername()" required>
+                            <div class="invalid-feedback-message" id="invalidUsername"></div>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email">
+                            <input type="email" class="form-control" id="email" name="email" oninput="validateEmail()" required>
+                            <div class="invalid-feedback-message" id="invalidEmail"></div>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password" oninput="validatePassword()" required>
+                            <div class="invalid-feedback-message" id="invalidPassword"></div>
                         </div>
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea class="form-control" id="address" name="address"></textarea>
+                            <textarea class="form-control" id="address" name="address" oninput="validateAddress()" required></textarea>
+                            <div class="invalid-feedback-message" id="invalidAddress"></div>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input class="form-control" maxlength="12" minlength="9" name="phone" id="phone">
+                            <input type="number" class="form-control" oninput="validatePhone()" name="phone" id="phone" required>
+                            <div class="invalid-feedback-message" id="invalidPhone"></div>
                         </div>
                         <div class="form-group">
-                            <a href="{{ url_for('auth.login') }}">Already have account?</a>
+                            <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-block">Already have account?</a>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark btn-block">Sign me up!</button>
                     </form>
                 </div>
             </div>
         </div>
+        <script src="{{ url_for('static', filename='js/jquery-3.3.1.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/auth/register.js')}}"></script>
     </body>
 </html>

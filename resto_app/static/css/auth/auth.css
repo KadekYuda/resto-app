@@ -1,3 +1,33 @@
 html, body{
     height: 100vh;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0;
+}
+
+input.invalid, textarea.invalid {
+    border-color: #dc3545 !important;
+}
+
+input.invalid:focus, textarea.invalid:focus {
+    box-shadow: 0 0 0 0.2rem #f1aeb4;
+}
+
+input.valid, textarea.valid {
+    border-color: #28a745 !important;
+}
+
+input.valid:focus, textarea.valid:focus {
+    box-shadow: 0 0 0 0.2rem #a9dbb4;
+}
+
+.invalid-feedback-message {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}

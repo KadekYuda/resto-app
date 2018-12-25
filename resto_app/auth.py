@@ -1,4 +1,7 @@
 import functools
+import requests
+import json
+import re
 
 from datetime import timedelta
 
@@ -26,27 +29,32 @@ def register():
         db = get_db()
         error = None
 
-        # TODO: Ubah pengecekan ke Javascript
-        if name is None:
+        if name is '':
             error = "Name required."
-        elif username is None:
+        elif username is '':
             error = "Username required."
-        elif password is None:
-            error = "Password required."
-        elif address is None:
+        elif len(password) < 6:
+            error = "Password needs to be at least 6 characters long."
+        elif address is '':
             error = "Address required."
-        elif email is None:
+        elif email is '':
             error = "Email required."
-        elif phone is None:
-            error = "Phone number required."
-        # pengecekan yang dipindah ke Javascript sampai sini aja
+        elif email_invalid(email):
+            error = '{} is not a valid email.'.format(email)
+        elif len(phone) < 9 or len(phone) > 12:
+            error = "Please enter 9 to 12 digits phone number"
         elif db.execute(
            'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
+        elif db.execute(
+            'SELECT id FROM user WHERE email = ?', (email,)
+        ).fetchone() is not None:
+            error = 'Email {} is already registered.'.format(email)
         
         if error is None:
-            db.execute(
+            cursor = db.cursor()
+            cursor.execute(
                 'INSERT INTO user(name, username, password, email, address, phone, image_url, role) '
                 ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                 (
@@ -60,9 +68,12 @@ def register():
                     role
                 )
             )
+            last_row_id = cursor.lastrowid
             db.commit()
-            flash("New user successfully created!")
-            return redirect(url_for('auth.login'))
+            session.clear()
+            session.permanent = True
+            session['user_id'] = last_row_id
+            return redirect(url_for('index'))
         flash(error)
     return render_template('auth/register.html')
 
@@ -86,11 +97,18 @@ def login():
             session.clear()
             session.permanent = True
             session['user_id'] = user['id']
-            # TODO: cek role, beda redirect untuk user dan admin
             return redirect(url_for('index'))
         
         flash(error)
     return render_template('auth/login.html')
+
+@bp.route('/validate-username/<string:username>')
+def validate_username(username):
+    db = get_db()
+    user = db.execute('SELECT id FROM user WHERE username = ?', (username,)).fetchone()
+    if user is None:
+        return json.dumps(True)
+    return json.dumps(False)
 
 @bp.route('/logout')
 def logout():
@@ -118,5 +136,8 @@ def login_required(view):
 
     return wrapped_view
 
+def email_invalid(email):
+    pattern = r"^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+    return not re.match(pattern, email)
 
 

@@ -53,11 +53,13 @@
             <h2>Check out our foods!</h2>
             <img class="img-thumbnail rounded" src="{{ url_for('static', filename='img/menu/food/1.jpg') }}">
             <p>Select from our various food selection that will make your mouth go boom and fills your heart with love!</p>
+            <a class="btn btn-info" role="button" href="{{ url_for('menu.index') }}#food">Check it out!<i class="fas fa-angle-double-right ml-2"></i></a>
         </div>
         <div class="col-sm-6 text-center">
             <h2>Don't forget your drinks!</h2>
             <img class="img-thumbnail rounded" src="{{ url_for('static', filename='img/menu/drink/1.jpg') }}">
             <p>Complete your meal experience with some of the best beverages in the city! Only in RestoApp restaurant!</p>
+            <a class="btn btn-info" role="button" href="{{ url_for('menu.index') }}#drink">Check it out!<i class="fas fa-angle-double-right ml-2"></i></a>
         </div>
     </div>
 

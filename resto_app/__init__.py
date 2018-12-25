@@ -2,7 +2,7 @@ import os
 
 from . import db, auth, menu
 from datetime import timedelta
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, send_from_directory
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)

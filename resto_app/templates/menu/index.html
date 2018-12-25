@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="m-5">
-        <h1>Foods</h1>
+        <h1 id="food">Foods</h1>
         <div class="row mb-5">
             {% for food in foods %}
                 <div class="col-lg-4 col-sm-12 mb-4">
@@ -21,7 +21,7 @@
                 </div>
             {% endfor %}
         </div>
-        <h1>Drinks</h1>
+        <h1 id="drink">Drinks</h1>
         <div class="row">
         {% for drink in drinks %}
             <div class="col-lg-4 col-sm-12 mb-4">
