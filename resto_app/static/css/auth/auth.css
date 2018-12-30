@@ -2,12 +2,6 @@ html, body{
     height: 100vh;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0;
-}
-
 input.invalid, textarea.invalid {
     border-color: #dc3545 !important;
 }

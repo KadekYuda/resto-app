@@ -1,19 +1,41 @@
 {% extends 'base.html' %}
 
+{% block title %} {{ item.name }} {% endblock %}
+
 {% block menu_active %}active{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu/menu.css') }}">
+{% endblock %}
 
 {% block content %}
     <div class="mt-5 mb-5">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-6">
                 <img class="img-thumbnail" src="{{item.image_url}}">
             </div>
-            <div class="col-md-6 col-sm-12 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h1>{{ item.name }}</h1>
                 <h5 class="price">{{ item.unit_price }}</h5>
                 <p class="flex-fill">{{ item.description }}</p>
                 {% if g.user %}
-                    <a href="#" class="btn btn-primary mb-1" role="button">Order</a>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepDown()">-</button>
+                                </div>
+                                <input type="number" id="amount" name="amount" class="form-control" aria-label="Amount" value=1 min=1>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepUp()">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="btn btn-primary btn-block mb-1" role="button" onclick="add_to_cart( {{ g.user['id'] }} , {{ item.menu_id }} )" >Order</a>
+                        </div>
+                    </div>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}" class="btn btn-danger mb-1" role="button">Login to order!</a>
                 {% endif %}
@@ -25,4 +47,5 @@
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/menu/currencyformat.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/menu/detail.js')}}"></script>
 {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    {% set ns = namespace(total = 0) %}
+    <div class="row p-4">
+        <div class="col-12">
+            <h1>Cart</h1>
+        </div>
+        <div class="col-8">
+            {% for items in cart_items %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <img src="{{ items.image_url }}" class="mh-100 img-thumbnail">
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <h3>{{ items.name }}</h3>
+                            <p>Amount: {{ items.amount }}</p>
+                            <p>Total: <span class="price">{{ items.total_price }}</span></p>
+                            {% set ns.total = ns.total + items.total_price %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-4">
+            <p>Total: <span class="price">{{ ns.total }}</span></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/menu/currencyformat.js')}}"></script>
+{% endblock %}
