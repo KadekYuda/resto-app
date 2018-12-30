@@ -2,6 +2,10 @@
 
 {% block title %}Cart{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart/cart.css') }}" >
+{% endblock %}
+
 {% block content %}
     {% set ns = namespace(total = 0) %}
     <div class="row p-4">
@@ -12,6 +16,9 @@
             {% for items in cart_items %}
             <div class="card">
                 <div class="card-body">
+                    <div class="row d-flex flex-row-reverse">
+                        <button class="del btn btn-danger m-2 del" onclick="activate_del_modal( {{g.user['id']}}, {{items.menu_id}} )"><i class="fas fa-trash-alt pull-right"></i></a>
+                    </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <img src="{{ items.image_url }}" class="mh-100 img-thumbnail">
@@ -28,11 +35,37 @@
             {% endfor %}
         </div>
         <div class="col-4">
-            <p>Total: <span class="price">{{ ns.total }}</span></p>
+            <div class="card">
+                <div class="card-header">
+                    Summary
+                </div>
+                <div class="card-body">
+                    <h4>Total: </h4>
+                    <h3 class="price">{{ ns.total }}</h3>
+                    <a href="#" class="btn btn-block btn-primary">Order</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="Confirm deletion" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" id="status">Delete this item from cart?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer"></div>
+            </div>
         </div>
     </div>
 {% endblock %}
-
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/menu/currencyformat.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/cart/cart.js')}}"></script>
 {% endblock %}

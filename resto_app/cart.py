@@ -13,7 +13,7 @@ bp = Blueprint('cart', __name__, url_prefix="/cart")
 def index():
     db = get_db()
     cart_items = db.execute(
-        'SELECT name, amount, unit_price, amount*unit_price AS total_price, image_url FROM cart JOIN menu ON cart.product_id = menu.menu_id WHERE user_id = ?', (g.user["id"],)
+        'SELECT menu_id, name, amount, unit_price, amount*unit_price AS total_price, image_url FROM cart JOIN menu ON cart.product_id = menu.menu_id WHERE user_id = ?', (g.user["id"],)
     ).fetchall()
     return render_template('cart/index.html', cart_items=cart_items)
 
@@ -32,4 +32,18 @@ def add():
     db.commit()
     return json.dumps(True)
 
+@bp.route('/delete', methods=["POST"])
+@login_required
+def delete():
+    data = request.get_json()
+    product_id = data["menu_id"]
+    user_id = data["user_id"]
+    if g.user["id"] == user_id:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute(
+            'DELETE FROM cart WHERE product_id = ? AND user_id = ?', (product_id, user_id,)
+        )
+        db.commit()
+        return json.dumps(True)
 
