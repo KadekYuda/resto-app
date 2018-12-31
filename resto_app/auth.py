@@ -125,6 +125,9 @@ def load_logged_in_user():
         g.user = get_db().execute(
             'SELECT * FROM user WHERE id = ?', (user_id,)
         ).fetchone()
+        g.items = get_db().execute(
+            'SELECT sum(amount) FROM cart WHERE user_id = ?', (g.user["id"],)
+        ).fetchone()["sum(amount)"]
 
 def login_required(view):
     @functools.wraps(view)

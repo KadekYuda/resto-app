@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <a href="#" class="btn btn-primary btn-block mb-1" role="button" onclick="add_to_cart( {{ g.user['id'] }} , {{ item.menu_id }} )" >Order</a>
+                            <a href="#" class="btn btn-primary btn-block mb-1" role="button" onclick="add_to_cart( {{ g.user['id'] }} , {{ item.menu_id }} )" >Add to Cart</a>
                         </div>
                     </div>
                 {% else %}
@@ -56,7 +56,7 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="location.reload()">OK</button>
                 </div>
             </div>
         </div>

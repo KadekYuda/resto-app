@@ -1,6 +1,6 @@
 import os
 
-from . import db, auth, menu, cart
+from . import db, auth, menu, cart, order
 from datetime import timedelta
 from flask import Flask, session, render_template, send_from_directory
 
@@ -29,7 +29,8 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
     app.register_blueprint(menu.bp)
     app.register_blueprint(cart.bp)
-    
+    app.register_blueprint(order.bp)
+
     @app.route('/')
     def index():
         return render_template('index.html')

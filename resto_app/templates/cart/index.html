@@ -42,14 +42,14 @@
                 <div class="card-body">
                     <h4>Total: </h4>
                     <h3 class="price">{{ ns.total }}</h3>
-                    <a href="#" class="btn btn-block btn-primary">Order</a>
+                    <a href="#" class="btn btn-block btn-primary" data-toggle="modal" data-target="#orderModal">Order</a>
                 </div>
             </div>
             
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Deletion Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="Confirm deletion" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -59,8 +59,73 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer"></div>
+                <div class="modal-body">
+                    <p>This action cannot be undone! Are you sure?</p>
+                </div>
+                <div class="modal-footer confirmModal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="Confirm order" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                {% if cart_items %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="status">Place this order?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="status">Empty cart!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                <div class="modal-body">
+                    {% if cart_items %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                    <th>Unit Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for items in cart_items %}
+                                    <tr>
+                                        <th scope="row">{{ loop.index }}</th>
+                                        <td>{{ items.name }}</td>
+                                        <td>{{ items.amount }}</td>
+                                        <td class="price">{{ items.unit_price }}</td>
+                                        <td class="price">{{ items.total_price }}</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="4" class="text-center font-weight-bold">Total</td>
+                                    <td class="price">{{ ns.total }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-danger text-center">Cart is empty. Please add menu items to cart before placing order.</p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    {% if cart_items %}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" onclick="add_order({{g.user['id']}})" class="btn btn-primary">OK</button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

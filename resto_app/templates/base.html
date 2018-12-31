@@ -30,7 +30,7 @@
                     <ul class="navbar-nav">
                         {% if g.user %}
                         <li class="nav-item mr-2">
-                            <a class="nav-link" href="{{ url_for('cart.index') }}"><i class="fas fa-shopping-cart mr-1"></i>Cart</a>
+                            <a class="nav-link" href="{{ url_for('cart.index') }}"><i class="fas fa-shopping-cart mr-1"></i>Cart {% if g.items %}<span class="badge badge-light">{{ g.items }}</span>{% endif %}</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

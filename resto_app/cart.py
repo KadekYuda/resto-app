@@ -46,4 +46,3 @@ def delete():
         )
         db.commit()
         return json.dumps(True)
-
