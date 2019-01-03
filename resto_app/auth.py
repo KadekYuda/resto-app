@@ -139,6 +139,15 @@ def login_required(view):
 
     return wrapped_view
 
+def admin_required(view):
+    @functools.wraps(view)
+    def admin_view(**kwargs):
+        if g.user is None or g.user["role"] != "admin":
+            return redirect(url_for('index'))
+        
+        return view(**kwargs)
+    return admin_view
+
 def email_invalid(email):
     pattern = r"^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
     return not re.match(pattern, email)

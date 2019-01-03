@@ -10,29 +10,32 @@
 {% endblock %}
 
 {% block content %}
-    <div class="mt-5 mb-5">
+    <div class="m-5">
         <div class="row">
-            <div class="col-md-6">
-                <img class="img-thumbnail" src="{{item.image_url}}">
+            <div class="col-lg-6 col-sm-12">
+                <img class="img-thumbnail img-fluid" src="{{item.image_url}}">
             </div>
-            <div class="col-md-6 d-flex flex-column">
+            <div class="col-lg-6 col-sm-12 d-flex flex-column">
                 <h1>{{ item.name }}</h1>
                 <h5 class="price">{{ item.unit_price }}</h5>
                 <p class="flex-fill">{{ item.description }}</p>
                 {% if g.user %}
                     <div class="row">
-                        <div class="col-6">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepDown()">-</button>
-                                </div>
-                                <input type="number" id="amount" name="amount" class="form-control" aria-label="Amount" value=1 min=1>
-                                <div class="input-group-append">
-                                    <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepUp()">+</button>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <label for="amount" class="col-sm-2 col-form-label">Qty: </label>
+                                <div class="input-group col-sm-10">
+                                    <div class="input-group-prepend">
+                                        <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepDown()">-</button>
+                                    </div>
+                                    <input type="number" id="amount" name="amount" class="form-control" aria-label="Amount" value=1 min=1>
+                                    <div class="input-group-append">
+                                        <button class="input-group-text" onclick="this.parentNode.parentNode.querySelector('#amount').stepUp()">+</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-12">
                             <a href="#" class="btn btn-primary btn-block mb-1" role="button" onclick="add_to_cart( {{ g.user['id'] }} , {{ item.menu_id }} )" >Add to Cart</a>
                         </div>
                     </div>
